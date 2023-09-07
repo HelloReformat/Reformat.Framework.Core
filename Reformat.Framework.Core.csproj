@@ -1,0 +1,54 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>disable</Nullable>
+        <LangVersion>11</LangVersion>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+      <DocumentationFile>bin\Debug\Reformat.Netcore.Boost.xml</DocumentationFile>
+      <Optimize>true</Optimize>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+      <DocumentationFile>bin\Release\Reformat.Netcore.Boost.xml</DocumentationFile>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="AspectInjector" Version="2.8.2" />
+        <PackageReference Include="FreeRedis" Version="1.1.5" />
+        <PackageReference Include="Grpc.AspNetCore" Version="2.55.0" />
+        <PackageReference Include="IGeekFan.AspNetCore.Knife4jUI" Version="0.0.16" />
+        <PackageReference Include="Lib.AspNetCore.ServerSentEvents" Version="8.2.0" />
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.21" />
+        <PackageReference Include="Microsoft.Extensions.Configuration" Version="7.0.0" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
+        <PackageReference Include="Microsoft.Extensions.PlatformAbstractions" Version="1.1.0" />
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.6.3" />
+        <PackageReference Include="MySql.Data" Version="8.1.0" />
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+        <PackageReference Include="Newtonsoft.Json.Bson" Version="1.0.2" />
+        <PackageReference Include="NUnit" Version="3.13.3" />
+        <PackageReference Include="SqlSugar" Version="5.1.4.105" />
+        <PackageReference Include="StackExchange.Redis" Version="2.6.122" />
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+        <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="6.5.0" />
+        <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.5.0" />
+        <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.5.0" />
+        <PackageReference Include="System.IO.Packaging" Version="7.0.0" />
+        <PackageReference Include="System.Text.Encoding.CodePages" Version="7.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Protobuf Include="**/*.proto" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="Banner.txt">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+</Project>
