@@ -5,7 +5,7 @@ using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace Reformat.Framework.Core.Swagger;
+namespace Reformat.Framework.Core.Swagger.Filter;
 
 /// <summary>
 /// Swagger枚举类显示增强
