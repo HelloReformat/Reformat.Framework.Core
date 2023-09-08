@@ -38,7 +38,7 @@ public static class Api
     
     public static APIResponse<string> RestError(string msg = "操作失败")
     {
-        return new APIResponse<string>(){code = 0,message = msg};
+        return new APIResponse<string>(){code = -1,message = msg};
     }
     
     public static APIResponse<string> RestError(int codeCode,string msg = "操作失败")
@@ -94,7 +94,7 @@ public static class Api
     
     public static async Task<APIResponse<string>> AsyncRestError(string msg = "操作失败")
     {
-        return new APIResponse<string>(){code = 0,message = msg};
+        return new APIResponse<string>(){code = -1,message = msg};
     }
     
     public static async Task<APIResponse<T>> AsyncRestError<T>(int codeCode,string codeMsg)
