@@ -31,4 +31,19 @@ public static class StringExtensions
         if (string.IsNullOrEmpty(value)) return value;
         return char.ToLowerInvariant(value[0]) + value.Substring(1);
     }
+    
+    /// <summary>忽略大小写的字符串结束比较，判断是否以任意一个待比较字符串结束</summary>
+    /// <param name="value">字符串</param>
+    /// <param name="strs">待比较字符串数组</param>
+    /// <returns></returns>
+    public static Boolean EndsWithIgnoreCase(this String? value, params String[] strs)
+    {
+        if (value == null || String.IsNullOrEmpty(value)) return false;
+
+        foreach (var item in strs)
+        {
+            if (value.EndsWith(item, StringComparison.OrdinalIgnoreCase)) return true;
+        }
+        return false;
+    }
 }

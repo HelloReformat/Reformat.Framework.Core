@@ -107,9 +107,11 @@ public static class GlobalStartup
     {
         // CORS
         app.UseCors("cors");
-
-        // Routing Setting
+        
+        // 添加身份验证和授权中间件
+        app.UseAuthentication();
         app.UseRouting();
+        app.UseAuthorization();
         
         // IOC 全局辅助
         app.UseServiceLocator();
