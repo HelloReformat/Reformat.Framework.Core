@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Reformat.Framework.Core.Converter;
+using Reformat.Framework.Core.Exceptions.Filter;
 using Reformat.Framework.Core.Files;
 using Reformat.Framework.Core.IOC.Extensions;
 using Reformat.Framework.Core.MVC;
@@ -50,7 +51,11 @@ public static class GlobalStartup
         // builder.Services.AddControllers();
         
         builder.Services.AddCors(option => option.AddPolicy("cors", policy => policy.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin()));
-        builder.Services.AddControllers(options => { options.Conventions.Add(new ApiSwitchFilter(builder.Configuration)); });
+        builder.Services.AddControllers(options =>
+        {
+            options.Conventions.Add(new ApiSwitchFilter(builder.Configuration));
+            options.Filters.Add(typeof(GlobalExceptionFilter));
+        });
         
         builder.Services.AddHttpContextAccessor();
         builder.Services.AddEndpointsApiExplorer();
@@ -79,7 +84,7 @@ public static class GlobalStartup
             o.InvalidModelStateResponseFactory = (context) =>
             {
                 var error = context.ModelState;
-                return new ObjectResult(new APIResponse<ModelStateDictionary>()
+                return new ObjectResult(new ApiResult<ModelStateDictionary>()
                 {
                     code = 400, message = "对象转换出错", data = error
                 });

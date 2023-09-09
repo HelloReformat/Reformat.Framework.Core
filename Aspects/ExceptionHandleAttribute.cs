@@ -8,7 +8,7 @@ namespace Reformat.Framework.Core.Aspects;
 
 /// <summary>
 /// 异常捕获
-/// Warning：只能在Controller中使用，且返回类型不能是复合抽象（APIResponse<T>）,T不能是Object
+/// Warning：只能在Controller中使用，且返回类型不能是复合抽象（ApiResult<T>）,T不能是Object
 /// </summary>
 [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
 [Aspect(Scope.Global)]
@@ -58,7 +58,7 @@ public class ExceptionHandleAttribute : Attribute
     /// <exception cref="Exception"></exception>
     private static Type GetAPIResponseContextType(string name,Type type)
     {
-        if (type.IsConstructedGenericType && type.GetGenericTypeDefinition().IsAssignableFrom(typeof(APIResponse<>)))
+        if (type.IsConstructedGenericType && type.GetGenericTypeDefinition().IsAssignableFrom(typeof(ApiResult<>)))
         {
             type = type.GenericTypeArguments[0];
             if (type.FullName.Equals("System.Object"))
@@ -100,11 +100,11 @@ public class ExceptionHandleAttribute : Attribute
     /// <param name="args"></param>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
-    private static APIResponse<T> WrapSync<T>(Func<object[], object> target, object[] args)
+    private static ApiResult<T> WrapSync<T>(Func<object[], object> target, object[] args)
     {
         try
         {
-            return (APIResponse<T>)target(args);
+            return (ApiResult<T>)target(args);
         }
         catch (PermissionException ex)
         {
@@ -135,11 +135,11 @@ public class ExceptionHandleAttribute : Attribute
     /// <param name="args"></param>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
-    private static async Task<APIResponse<T>> WrapAsync<T>(Func<object[], object> target, object[] args)
+    private static async Task<ApiResult<T>> WrapAsync<T>(Func<object[], object> target, object[] args)
     {
         try
         {
-            return await (Task<APIResponse<T>>)target(args);
+            return await (Task<ApiResult<T>>)target(args);
         }
         catch (PermissionException ex)
         {
