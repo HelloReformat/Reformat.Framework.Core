@@ -11,20 +11,16 @@ namespace Reformat.Framework.Core.IOC.Services;
 [ScopedService]
 public class IocScoped
 {
-    /// <summary>
-    /// Token管理器
-    /// </summary>
-    private TokenManager TokenManager;
-    public TokenManager GetTokenManager() => TokenManager;
+    public HttpContextManager HttpContextManager;
     
     private IServiceProvider ServiceProvider{ set ; get; }
     private IServiceScopeFactory ServiceScopeFactory { set ; get; }
     
-    public IocScoped(IServiceProvider serviceProvider,IServiceScopeFactory serviceScopeFactory,TokenManager tokenManager)
+    public IocScoped(IServiceProvider serviceProvider,IServiceScopeFactory serviceScopeFactory,HttpContextManager httpContextManager)
     {
         ServiceProvider = serviceProvider;
         ServiceScopeFactory = serviceScopeFactory;
-        TokenManager = tokenManager;
+        HttpContextManager = httpContextManager;
     }
     
     private ConcurrentDictionary<Type, Action<object, IServiceProvider>> autowiredActions =

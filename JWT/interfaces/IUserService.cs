@@ -2,11 +2,7 @@
 
 public interface IUserService
 {
-    public IUser GetUserByToken(string token);
+    public IUser GetCurrentUser();
 
-    public Task<IUser> GetUserById(long id);
-    
-    public Task<List<IUser>> GetUserByIds(long[] ids = null);
-
-    //public Task<List<long>> GetAllUserIds();
+    //public Task<List<IUser>> GetUserByIds(long[] ids = null);
 }

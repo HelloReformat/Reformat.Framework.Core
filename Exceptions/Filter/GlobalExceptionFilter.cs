@@ -31,7 +31,7 @@ public class GlobalExceptionFilter : IAsyncExceptionFilter
             catch { }
             
             context.ExceptionHandled = true;
-            context.Result = new JsonResult(new ApiResult(500, context.Exception.Message, default));
+            context.Result = new JsonResult(new ApiResult(false,500, context.Exception.Message, default));
         }
         return Task.CompletedTask;
     }

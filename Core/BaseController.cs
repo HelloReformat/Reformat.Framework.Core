@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Mvc;
 using Reformat.Framework.Core.Aspects;
 using Reformat.Framework.Core.IOC.Services;
 

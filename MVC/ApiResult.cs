@@ -6,27 +6,39 @@ public class ApiResult
     {
     }
 
-    public ApiResult(int code, string message, object data)
+    public ApiResult(bool success,string message)
     {
-        this.code = code;
-        this.message = message;
-        this.data = data;
+        this.Success = success;
+        this.Message = message;
     }
+
+    public ApiResult(bool success,int errorCode, string message, object data)
+    {
+        this.Success = success;
+        this.ErrorCode = errorCode;
+        this.Message = message;
+        this.Data = data;
+    }
+
+    /// <summary>
+    /// 是否成功
+    /// </summary>
+    public bool Success { get; set; }
 
     /// <summary>
     /// 错误编号 当为0时为正确结果
     /// </summary>
-    public int code { get; set; }
+    public int ErrorCode { get; set; }
 
     /// <summary>
     /// 运行结果
     /// </summary>
-    public string message { get; set; }
+    public string Message { get; set; }
         
     /// <summary>
     /// 返回数据  
     /// </summary>
-    public Object data { get; set; }
+    public Object Data { get; set; }
 }
 
 
@@ -35,5 +47,17 @@ public class ApiResult<T> : ApiResult
     /// <summary>
     /// 返回数据  
     /// </summary>
-    public T data { get; set; }
+    public T Data { get; set; }
+
+    public ApiResult()
+    {
+    }
+
+    public ApiResult(bool success, string message) : base(success, message)
+    {
+    }
+
+    public ApiResult(bool success, int errorCode, string message, object data) : base(success, errorCode, message, data)
+    {
+    }
 }

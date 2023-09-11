@@ -68,8 +68,9 @@ public static class GlobalStartup
         builder.Services.AddMvc().AddNewtonsoftJson(options =>
             {
                 //修改属性名称的序列化方式，首字母小写
-                options.SerializerSettings.ContractResolver = null;
-                options.SerializerSettings.DateFormatString = "yyyy-MM-dd";
+                options.SerializerSettings.ContractResolver = null; 
+                // options.SerializerSettings.DateFormatString = "yyyy-MM-dd";
+                options.SerializerSettings.DateFormatString = "yyyy-MM-dd HH:mm:ss";
                 //修改时间的序列化方式
                 options.SerializerSettings.Converters.Add(new NewtonsoftJsonDateTimeConvert());
                 options.SerializerSettings.Converters.Add(new NewtonsoftJsonDateTimeNullableConverter());
@@ -77,6 +78,9 @@ public static class GlobalStartup
                 options.SerializerSettings.Converters.Add(new NewtonsoftJsonDateOnlyNullableConverter());
                 options.SerializerSettings.Converters.Add(new NewtonsoftJsonTimeOnlyConvert());
                 options.SerializerSettings.Converters.Add(new NewtonsoftJsonTimeOnlyNullableConverter());
+                
+                //TODO： 20330910：忽略循环引用 待测速
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
             }
         ).ConfigureApiBehaviorOptions(o =>
         {
@@ -86,7 +90,7 @@ public static class GlobalStartup
                 var error = context.ModelState;
                 return new ObjectResult(new ApiResult<ModelStateDictionary>()
                 {
-                    code = 400, message = "对象转换出错", data = error
+                    ErrorCode = 400, Message = "对象转换出错", Data = error
                 });
             };
         });
@@ -128,9 +132,14 @@ public static class GlobalStartup
         if (!app.Environment.IsProduction())
         {
             app.UseDeveloperExceptionPage();
+            app.UseDeveloperExceptionPage();
             app.UseSwaggerConfig(true);
         }
-        
+        else
+        {
+            app.UseExceptionHandler("/Home/Error");
+        }
+
         // Endpoints
         app.UseEndpoints(endpoints =>
         {

@@ -10,8 +10,4 @@ public interface IUser
     /// 姓名
     /// </summary>
     public string Name { get; set; }
-    /// <summary>
-    /// 手机
-    /// </summary>
-    public string phone { get; set; }
 }

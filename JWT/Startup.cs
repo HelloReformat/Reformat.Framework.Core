@@ -9,8 +9,8 @@ namespace Reformat.Framework.Core.JWT;
 /// </summary>
 public static class Startup
 {
-    public static void AddCustomUser<T>(this WebApplicationBuilder builder) where T : class, IUserService
+    public static void AddUserService<T>(this WebApplicationBuilder builder) where T : class, IUserService
     {
-        builder.Services.AddSingleton<IUserService,T>();
+        builder.Services.AddScoped<IUserService,T>();
     }
 }

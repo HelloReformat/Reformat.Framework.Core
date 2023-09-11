@@ -1,15 +1,17 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Http;
 using Reformat.Framework.Core.IOC.Attributes;
 using Reformat.Framework.Core.Common.Extensions.lang;
 
 namespace Reformat.Framework.Core.JWT.Core;
 
 [ScopedService]
-public class TokenManager
+public class HttpContextManager
 {
     private IHttpContextAccessor _accessor;
-
-    public TokenManager(IHttpContextAccessor _accessor)
+    public ClaimsPrincipal User => _accessor.HttpContext.User;
+    
+    public HttpContextManager(IHttpContextAccessor _accessor)
     {
         this._accessor = _accessor;
     }
@@ -21,12 +23,12 @@ public class TokenManager
         return bearerToken ? value : value.Substring(7);
     }
 
-    public string GetToken()
-    {
-        string token = "";
-#if DEBUG
-        if (token.IsNullOrEmpty()) return "dev";
-#endif
-        return _accessor.HttpContext.Request.Headers["token"].FirstOrDefault("");
-    }
+//     public string GetToken()
+//     {
+//         string token = "";
+// #if DEBUG
+//         if (token.IsNullOrEmpty()) return "dev";
+// #endif
+//         return _accessor.HttpContext.Request.Headers["token"].FirstOrDefault("");
+//     }
 }
