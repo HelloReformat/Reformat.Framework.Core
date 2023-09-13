@@ -1,8 +1,21 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using Reformat.Framework.Core.Common.Extensions.lang;
 
 namespace Reformat.Framework.Core.Converter
 {
+    /// <summary>
+    /// 小驼峰转换
+    /// </summary>
+    public class CamelCaseContractResolver : DefaultContractResolver
+    {
+        protected override string ResolvePropertyName(string propertyName)
+        {
+            return char.ToLowerInvariant(propertyName[0]) + propertyName.Substring(1);
+        }
+    }
+    
+    
     #region DateTime
 
     /// <summary>

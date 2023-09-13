@@ -68,7 +68,7 @@ public static class GlobalStartup
         builder.Services.AddMvc().AddNewtonsoftJson(options =>
             {
                 //修改属性名称的序列化方式，首字母小写
-                options.SerializerSettings.ContractResolver = null; 
+                options.SerializerSettings.ContractResolver = new CamelCaseContractResolver(); 
                 // options.SerializerSettings.DateFormatString = "yyyy-MM-dd";
                 options.SerializerSettings.DateFormatString = "yyyy-MM-dd HH:mm:ss";
                 //修改时间的序列化方式
