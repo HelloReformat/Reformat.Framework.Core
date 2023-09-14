@@ -35,16 +35,16 @@ public class ExceptionHandleAttribute : Attribute
         {
             return target(args);
         }
-        
+
         if (typeof(Task).IsAssignableFrom(retType))
         {
             var AsyncResultType = retType.IsConstructedGenericType ? retType.GenericTypeArguments[0] : typeof(object);
-            AsyncResultType = GetAPIResponseContextType(name,AsyncResultType);
+            AsyncResultType = GetAPIResponseContextType(name, AsyncResultType);
             return asyncErrorHandler.MakeGenericMethod(AsyncResultType).Invoke(this, new object[] { target, args });
         }
         else
         {
-            var SyncResultType = GetAPIResponseContextType(name,retType);
+            var SyncResultType = GetAPIResponseContextType(name, retType);
             return syncErrorHandler.MakeGenericMethod(SyncResultType).Invoke(this, new object[] { target, args });
         }
     }
@@ -56,7 +56,7 @@ public class ExceptionHandleAttribute : Attribute
     /// <param name="type"></param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    private static Type GetAPIResponseContextType(string name,Type type)
+    private static Type GetAPIResponseContextType(string name, Type type)
     {
         if (type.IsConstructedGenericType && type.GetGenericTypeDefinition().IsAssignableFrom(typeof(ApiResult<>)))
         {
@@ -70,9 +70,10 @@ public class ExceptionHandleAttribute : Attribute
         {
             throw new Exception($"{name} : 不支持非APIResponse<T>类型的方法");
         }
+
         return type;
     }
-    
+
     /// <summary>
     /// 判断是否有HTTP注解
     /// </summary>
@@ -82,7 +83,7 @@ public class ExceptionHandleAttribute : Attribute
     private bool IsExistHttpAttribute(MethodBase Metadata)
     {
         if (!Metadata.GetCustomAttributes().Any()) return false;
-      
+
         foreach (var attribute in Metadata.GetCustomAttributes())
         {
             if (attribute is HttpMethodAttribute)
@@ -90,6 +91,7 @@ public class ExceptionHandleAttribute : Attribute
                 return true;
             }
         }
+
         return false;
     }
 
@@ -119,7 +121,7 @@ public class ExceptionHandleAttribute : Attribute
         catch (ValidateException ex)
         {
             Console.WriteLine("验证不通过: " + ex.message + ":" + ex.Message + "====>" + ex.StackTrace);
-            return Api.RestError<T>(ex.code, ex.message, ex.details.ToString());
+            return Api.RestError<T>(ex.code, ex.message, ex.details != null ? ex.details.ToString() : "");
         }
         catch (Exception ex)
         {
@@ -154,7 +156,7 @@ public class ExceptionHandleAttribute : Attribute
         catch (ValidateException ex)
         {
             Console.WriteLine("验证不通过: " + ex.message + ":" + ex.Message + "====>" + ex.StackTrace);
-            return await Api.AsyncRestError<T>(ex.code, ex.message, ex.details.ToString());
+            return await Api.AsyncRestError<T>(ex.code, ex.message, ex.details != null ? ex.details.ToString() : "");
         }
         catch (Exception ex)
         {
