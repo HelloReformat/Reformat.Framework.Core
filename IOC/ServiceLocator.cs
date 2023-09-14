@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Reformat.Framework.Core.IOC.Exceptions;
 
 namespace Reformat.Framework.Core.IOC;
@@ -26,4 +27,6 @@ public static class ServiceLocator
         if (Instance == null) throw new IocRegisterException("尚未注册ServiceLocator");
         return Instance.GetServices<T>().Count() == 0 ? Instance.GetServices<T>() : throw new IocException("尚未找到相关Bean+"+ typeof(T));
     }
+    
+    public static IConfiguration GetConfiguration() => GetService<IConfiguration>();
 }

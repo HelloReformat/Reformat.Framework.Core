@@ -41,19 +41,19 @@ public static class Api
         return new ApiResult<string>(){Success = false,ErrorCode = -1,Message = msg};
     }
     
-    public static ApiResult<string> RestError(int codeCode,string msg = "操作失败")
+    public static ApiResult<string> RestError(int errorCode,string msg = "操作失败")
     {
-        return new ApiResult<string>(){Success = false,ErrorCode = codeCode,Message = msg};
+        return new ApiResult<string>(){Success = false,ErrorCode = errorCode,Message = msg};
     }
     
-    public static ApiResult<T> RestError<T>(int codeCode,string codeMsg)
+    public static ApiResult<T> RestError<T>(int errorCode,string codeMsg)
     {
-        return new ApiResult<T>(){Success = false,ErrorCode = codeCode,Message = "操作失败: " + codeMsg};
+        return new ApiResult<T>(){Success = false,ErrorCode = errorCode,Message = "操作失败: " + codeMsg};
     }
     
-    public static ApiResult<T> RestError<T>(int codeCode,string codeMsg,string details)
+    public static ApiResult<T> RestError<T>(int errorCode,string codeMsg,string details)
     {
-        return new ApiResult<T>(){Success = false,ErrorCode = codeCode,Message = codeMsg + " : " + details};
+        return new ApiResult<T>(){Success = false,ErrorCode = errorCode,Message = codeMsg + " : " + details};
     }
 
     #endregion
@@ -97,14 +97,14 @@ public static class Api
         return new ApiResult<string>(){Success = false,ErrorCode = -1,Message = msg};
     }
     
-    public static async Task<ApiResult<T>> AsyncRestError<T>(int codeCode,string codeMsg)
+    public static async Task<ApiResult<T>> AsyncRestError<T>(int errorCode,string codeMsg)
     {
-        return new ApiResult<T>(){Success = false,ErrorCode = codeCode,Message = "操作失败: " + codeMsg};
+        return new ApiResult<T>(){Success = false,ErrorCode = errorCode,Message = "操作失败: " + codeMsg};
     }
 
-    public static async Task<ApiResult<T>> AsyncRestError<T>(int codeCode,string codeMsg,string details)
+    public static async Task<ApiResult<T>> AsyncRestError<T>(int errorCode,string codeMsg,string details)
     {
-        return new ApiResult<T>(){Success = false,ErrorCode = codeCode,Message = codeMsg + " : " + details};
+        return new ApiResult<T>(){Success = false,ErrorCode = errorCode,Message = codeMsg + " : " + details};
     }
     #endregion
 }
