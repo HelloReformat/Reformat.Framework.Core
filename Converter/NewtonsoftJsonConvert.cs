@@ -14,6 +14,26 @@ namespace Reformat.Framework.Core.Converter
             return char.ToLowerInvariant(propertyName[0]) + propertyName.Substring(1);
         }
     }
+
+    /// <summary>
+    /// Long 类型转换
+    /// </summary>
+    public class LongConverter : JsonConverter<long>
+    {
+        public override void WriteJson(JsonWriter writer, long value, JsonSerializer serializer)
+        {
+            writer.WriteValue(value.ToString());
+        }
+
+        public override long ReadJson(JsonReader reader, Type objectType, long existingValue, bool hasExistingValue, JsonSerializer serializer)
+        {
+            if (reader.Value != null && long.TryParse(reader.Value.ToString(), out long result))
+            {
+                return result;
+            }
+            return existingValue;
+        }
+    }
     
     
     #region DateTime

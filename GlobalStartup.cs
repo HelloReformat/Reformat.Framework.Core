@@ -71,13 +71,16 @@ public static class GlobalStartup
                 options.SerializerSettings.ContractResolver = new CamelCaseContractResolver(); 
                 // options.SerializerSettings.DateFormatString = "yyyy-MM-dd";
                 options.SerializerSettings.DateFormatString = "yyyy-MM-dd HH:mm:ss";
-                //修改时间的序列化方式
+                // 特定类型序列化
                 options.SerializerSettings.Converters.Add(new NewtonsoftJsonDateTimeConvert());
                 options.SerializerSettings.Converters.Add(new NewtonsoftJsonDateTimeNullableConverter());
                 options.SerializerSettings.Converters.Add(new NewtonsoftJsonDateOnlyConvert());
                 options.SerializerSettings.Converters.Add(new NewtonsoftJsonDateOnlyNullableConverter());
                 options.SerializerSettings.Converters.Add(new NewtonsoftJsonTimeOnlyConvert());
                 options.SerializerSettings.Converters.Add(new NewtonsoftJsonTimeOnlyNullableConverter());
+                
+                // 解决前端精度丢失的问题
+                options.SerializerSettings.Converters.Add(new LongConverter());
                 
                 //TODO： 20330910：忽略循环引用 待测速
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
