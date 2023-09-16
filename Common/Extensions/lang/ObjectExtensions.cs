@@ -62,4 +62,16 @@ public static class ObjectExtensions
         source.CopyPropertiesTo(ref obj);
         return obj;
     }
+    
+    /// <summary>
+    /// 判断对象是否为数字类型
+    /// </summary>
+    /// <param name="obj"></param>
+    /// <returns></returns>
+    public static bool IsNumericType(this object obj)
+    {
+        if (obj == null) return false;
+        var type = obj.GetType();
+        return type.IsPrimitive && Type.GetTypeCode(type) != TypeCode.Object && !type.Equals(typeof(bool)) && !type.Equals(typeof(char));
+    }
 }

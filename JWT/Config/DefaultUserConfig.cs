@@ -1,4 +1,5 @@
-﻿using Reformat.Framework.Core.Core;
+﻿using Reformat.Framework.Core.Aspects;
+using Reformat.Framework.Core.Core;
 using Reformat.Framework.Core.IOC.Attributes;
 using Reformat.Framework.Core.IOC.Services;
 using Reformat.Framework.Core.JWT.interfaces;
@@ -18,5 +19,10 @@ public class DefaultUserConfig : BaseSingleService,IUserService
     public IUser GetCurrentUser()
     {
         throw new NotImplementedException("请继承IUserConfig并实现相关方法,并通过builder.Services.AddUserSupport<XXX>();进行注册");
+    }
+
+    public bool CheckPermissions(string permissions)
+    {
+        return true;
     }
 }
