@@ -9,16 +9,25 @@ namespace Reformat.Framework.Core.Aspects;
 /// <summary>
 /// 权限接口：需要自定义实现切面逻辑
 /// </summary>
-
-[AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
-[Aspect(Scope.Global)]
-[Injection(typeof(RequestPermissionsAttribute))]
+[AttributeUsage(AttributeTargets.Class  | AttributeTargets.Method)]
+[Injection(typeof(RequestPermissionsAspect))]
 public class RequestPermissionsAttribute : Attribute
 {
     public string PowerCode { get; set; }
 
-    public string[] NoAuth { get; set; }
+    public string[] IgnoreMethodName { get; set; }
 
+    public RequestPermissionsAttribute(string powerCode, params string[] ignoreMethodName)
+    {
+        PowerCode = powerCode;
+        IgnoreMethodName = ignoreMethodName;
+    }
+}
+
+
+[Aspect(Scope.Global)]
+public class RequestPermissionsAspect : Attribute
+{
     [Advice(Kind.Before, Targets = Target.Method | Target.AnyAccess)]
     public void Before(
         [Argument(Source.Instance)] object Instance,
@@ -39,7 +48,7 @@ public class RequestPermissionsAttribute : Attribute
         IUserSupport obj = Instance as IUserSupport;
         if (obj == null) throw new Exception("目标类未继承 IUserSupport");
 
-        if (permissions.NoAuth != null && permissions.NoAuth.Contains(name)) return;
+        if (permissions.IgnoreMethodName != null && permissions.IgnoreMethodName.Contains(name)) return;
         
         if (permissions.PowerCode.IsNullOrEmpty())
         {
